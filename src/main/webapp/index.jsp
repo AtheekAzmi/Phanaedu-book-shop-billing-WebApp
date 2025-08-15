@@ -49,7 +49,7 @@
         text-transform: uppercase;
     }
 
-    .lead{
+    . lead{
         text-align: center;
         color: #ffffff;
         font-size: 25px;

@@ -29,15 +29,13 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String role = request.getParameter("role");
 
 //        User user = userDAO.validateLogin(username, password);
 
-        if (UserDAO.validateUser(username, password, role)) {
+        if (UserDAO.validateUser(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             session.setAttribute("password", password);
-            session.setAttribute("role", role);
             response.sendRedirect("dashboard.jsp");
         } else {
             request.setAttribute("error", "Invalid username or password");
