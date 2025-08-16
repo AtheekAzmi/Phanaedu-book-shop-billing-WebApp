@@ -11,7 +11,7 @@ import static util.DBConnection.getConnection;
 
 public class CustomerDAO {
 
-    public void save(Customer customer) throws SQLException {
+    public static void save(Customer customer) throws SQLException {
         String sql = "INSERT INTO customer (account_number, full_name, address, contact_no, unit_consumed) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
