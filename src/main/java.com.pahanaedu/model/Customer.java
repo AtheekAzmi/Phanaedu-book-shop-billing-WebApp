@@ -8,7 +8,7 @@ public class Customer {
     private String contact_no;
     private int unit_consumed;
 
-    public Customer() {}
+    public Customer(String account_number, String full_name, String address, String contact_no, int unit_consumed) {}
 
     public Customer(int customer_id, String account_number, String full_name, String address, String contact_no, int unit_consumed) {
         this.customer_id = customer_id;

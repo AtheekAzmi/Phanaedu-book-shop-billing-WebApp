@@ -50,7 +50,7 @@ public class CustomerDAO {
         return customers;
     }
 
-        public void update (Customer customer) throws SQLException {
+        public static void update(Customer customer) throws SQLException {
         String sql = "UPDATE customer SET account_number=?, full_name=?, address=?, contact_no=?, unit_consumed=? WHERE customer_id=?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -82,6 +82,32 @@ public class CustomerDAO {
                 rs.getString("contact_no"),
                 rs.getInt("unit_consumed")
         );
+    }
+
+    public Customer getCustomerByAccountNumber(String accountNumber) {
+        String sql = "SELECT * FROM customer WHERE account_number=?";
+        Customer customer = null;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, accountNumber);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                customer = new Customer(
+                        rs.getString("account_number"),
+                        rs.getString("name"),
+                        rs.getString("address"),
+                        rs.getString("telephone"),
+                        rs.getInt("units_consumed")
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customer;
     }
 }
 
