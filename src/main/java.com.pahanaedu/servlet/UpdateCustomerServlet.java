@@ -10,19 +10,29 @@ import java.io.IOException;
 
 @WebServlet("/updateCustomer")
 public class UpdateCustomerServlet extends HttpServlet {
-    private CustomerDAO customerDAO = new CustomerDAO();
+
+    private CustomerDAO customerDAO;
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Customer customer = new Customer(
-                Integer.parseInt(request.getParameter("customer_id")),
-                request.getParameter("account_number"),
-                request.getParameter("full_name"),
-                request.getParameter("address"),
-                request.getParameter("contact_no"),
-                Integer.parseInt(request.getParameter("unit_consumed"))
-        );
-        customerDAO.updateCustomer(customer);
-        response.sendRedirect("listCustomers");
+    public void init() {
+        customerDAO = new CustomerDAO();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int customerId = Integer.parseInt(request.getParameter("customer_id"));
+        String accountNumber = request.getParameter("account_number");
+        String fullName = request.getParameter("full_name");
+        String address = request.getParameter("address");
+        String contactNo = request.getParameter("contact_no");
+        int unitsConsumed = Integer.parseInt(request.getParameter("unit_consumed"));
+
+        Customer customer = new Customer(customerId, accountNumber, fullName, address, contactNo, unitsConsumed);
+
+        customerDAO.updateCustomer(customer);  // DAO is void, no boolean return
+
+        response.sendRedirect("customerUpdateSuccess.jsp");
     }
 }

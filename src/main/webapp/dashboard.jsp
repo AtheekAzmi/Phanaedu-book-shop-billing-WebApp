@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="model.User" %>
+<%@ page import="dao.CustomerDAO" %>
+<%@ page import="model.Customer" %>
+<%@ page import="java.util.List" %>
 <%
     String username = (String) session.getAttribute("user");
     if (username == null) {
@@ -108,9 +111,7 @@
             <div class="collapse" id="customerMenu">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
                     <li><a href="customer-add.jsp" class="nav-link text-white"><i class="bi bi-person-plus"></i> Add Customer</a></li>
-                    <li><a href="customer-edit.jsp" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Edit Customer</a></li>
                     <li><a href="listCustomers" class="nav-link text-white"><i class="bi bi-person-lines-fill"></i> View Customer Details</a></li>
-                    <li><a href="" class="nav-link text-white"><i class="bi bi-person-x"></i> Delete Customer</a></li>
                 </ul>
             </div>
         </li>
@@ -129,7 +130,7 @@
             </div>
         </li>
         <li>
-            <a href="#" class="nav-link text-white d-flex align-items-center">
+            <a href="view-customer-list.jsp" class="nav-link text-white d-flex align-items-center">
                 <i class="bi bi-person-badge"></i>
                 <span class="ms-2">Display Account Details</span>
             </a>
@@ -176,9 +177,7 @@
                 <div class="collapse" id="customerMenuMobile">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
                         <li><a href="customer-add.jsp" class="nav-link text-white"><i class="bi bi-person-plus"></i> Add Customer</a></li>
-                        <li><a href="customer-edit.jsp" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Edit Customer</a></li>
-                        <li><a href="customer-list.jsp" class="nav-link text-white"><i class="bi bi-person-lines-fill"></i> View Customer Details</a></li>
-                        <li><a href="#" class="nav-link text-white"><i class="bi bi-person-x"></i> Delete Customer</a></li>
+                        <li><a href="listCustomers" class="nav-link text-white"><i class="bi bi-person-lines-fill"></i> View Customer Details</a></li>
                     </ul>
                 </div>
             </li>
@@ -197,7 +196,7 @@
                 </div>
             </li>
             <li>
-                <a href="#" class="nav-link text-white d-flex align-items-center">
+                <a href="view-customer-list.jsp" class="nav-link text-white d-flex align-items-center">
                     <i class="bi bi-person-badge"></i>
                     <span class="ms-2">Display Account Details</span>
                 </a>
@@ -254,8 +253,14 @@
         <div class="card border-primary h-100">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Total Customers</h6>
-                <h3>N/A</h3>
-                <span class="text-secondary">Loading...</span>
+                <%
+                    CustomerDAO customerDAO = new CustomerDAO();
+                    List<Customer> customers = customerDAO.getAllCustomers();
+                    int totalCustomers = customers.size();
+                %>
+                <h3><%= totalCustomers %>
+                </h3>
+                <span class="text-secondary">Current total customers</span>
                 <div class="mt-2 text-success small">+12.5% from last month</div>
                 <span class="position-absolute top-0 end-0 m-3"><i class="bi bi-people fs-4"></i></span>
             </div>

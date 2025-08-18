@@ -73,7 +73,7 @@ public class CustomerDAO {
     }
 
     // Update customer
-    public boolean updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) {
         String sql = "UPDATE customer SET account_number=?, full_name=?, address=?, contact_no=?, unit_consumed=? WHERE customer_id=?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -87,8 +87,8 @@ public class CustomerDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
+
 
     // Delete customer
     public void deleteCustomer(int id) {
