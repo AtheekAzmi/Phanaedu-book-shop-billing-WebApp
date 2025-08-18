@@ -107,9 +107,10 @@
             </a>
             <div class="collapse" id="customerMenu">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
-                    <li><a href="addcustomer.jsp" class="nav-link text-white"><i class="bi bi-person-plus"></i> Add Customer</a></li>
-                    <li><a href="updateCustomer.jsp" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Edit Customer</a></li>
-                    <li><a href="#" class="nav-link text-white"><i class="bi bi-person-x"></i> Delete Customer</a></li>
+                    <li><a href="customer-add.jsp" class="nav-link text-white"><i class="bi bi-person-plus"></i> Add Customer</a></li>
+                    <li><a href="customer-edit.jsp" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Edit Customer</a></li>
+                    <li><a href="listCustomers" class="nav-link text-white"><i class="bi bi-person-lines-fill"></i> View Customer Details</a></li>
+                    <li><a href="" class="nav-link text-white"><i class="bi bi-person-x"></i> Delete Customer</a></li>
                 </ul>
             </div>
         </li>
@@ -174,8 +175,9 @@
                 </a>
                 <div class="collapse" id="customerMenuMobile">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
-                        <li><a href="addcustomer.jsp" class="nav-link text-white"><i class="bi bi-person-plus"></i> Add Customer</a></li>
-                        <li><a href="updateCustomer.jsp" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Edit Customer</a></li>
+                        <li><a href="customer-add.jsp" class="nav-link text-white"><i class="bi bi-person-plus"></i> Add Customer</a></li>
+                        <li><a href="customer-edit.jsp" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Edit Customer</a></li>
+                        <li><a href="customer-list.jsp" class="nav-link text-white"><i class="bi bi-person-lines-fill"></i> View Customer Details</a></li>
                         <li><a href="#" class="nav-link text-white"><i class="bi bi-person-x"></i> Delete Customer</a></li>
                     </ul>
                 </div>
@@ -297,7 +299,7 @@
     <h6 class="fw-bold">Quick Actions</h6>
     <div class="row g-3">
         <div class="col-md-4">
-            <a href="addcustomer.jsp" class="text-decoration-none">
+            <a href="customer-add.jsp" class="text-decoration-none">
                 <div class="card h-100">
                     <div class="card-body d-flex align-items-center">
                         <i class="bi bi-person-plus fs-2 text-primary me-3"></i>

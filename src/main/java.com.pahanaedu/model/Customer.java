@@ -8,7 +8,13 @@ public class Customer {
     private String contact_no;
     private int unit_consumed;
 
-    public Customer(String account_number, String full_name, String address, String contact_no, int unit_consumed) {}
+    public Customer(String account_number, String full_name, String address, String contact_no, int unit_consumed) {
+        this.account_number = account_number;
+        this.full_name = full_name;
+        this.address = address;
+        this.contact_no = contact_no;
+        this.unit_consumed = unit_consumed;
+    }
 
     public Customer(int customer_id, String account_number, String full_name, String address, String contact_no, int unit_consumed) {
         this.customer_id = customer_id;
@@ -17,6 +23,10 @@ public class Customer {
         this.address = address;
         this.contact_no = contact_no;
         this.unit_consumed = unit_consumed;
+    }
+
+    public Customer() {
+
     }
 
     public int getCustomer_id() { return customer_id; }

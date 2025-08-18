@@ -5,44 +5,23 @@ import model.Customer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/addCustomer")
 public class AddCustomerServlet extends HttpServlet {
-    private CustomerDAO customerDAO;
+    private CustomerDAO customerDAO = new CustomerDAO();
 
     @Override
-    public void init() {
-        customerDAO = new CustomerDAO();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String account_number = request.getParameter("accountNumber");
-        String full_name = request.getParameter("name");
-        String address = request.getParameter("address");
-        String contact_no = request.getParameter("telephone");
-        int unit_consumed = Integer.parseInt(request.getParameter("unitsConsumed"));
-
-        Customer customer = new Customer(account_number, full_name, address, contact_no, unit_consumed);
-        customer.setAccount_number(account_number);
-        customer.setFull_name(full_name);
-        customer.setAddress(address);
-        customer.setContact_no(contact_no);
-        customer.setUnit_consumed(unit_consumed);
-
-        try {
-            CustomerDAO.save(customer);
-            response.sendRedirect("customerSuccess.jsp");
-        } catch (SQLException e) {
-            request.setAttribute("error", "Failed to add customer. Please try again.");
-            request.getRequestDispatcher("addcustomer.jsp").forward(request, response);
-        }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Customer customer = new Customer(
+                request.getParameter("account_number"),
+                request.getParameter("full_name"),
+                request.getParameter("address"),
+                request.getParameter("contact_no"),
+                Integer.parseInt(request.getParameter("unit_consumed"))
+        );
+        customerDAO.addCustomer(customer);
+        response.sendRedirect("listCustomers");
     }
 }
