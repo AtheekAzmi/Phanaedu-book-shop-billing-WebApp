@@ -38,7 +38,7 @@
         </div>
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Customer has been successfully updated!</h2>
         <div class="space-y-4 sm:space-y-0 sm:space-x-4">
-            <a href="addCustomer.jsp"
+            <a href="customer-add.jsp"
                class="inline-block px-6 py-3 bg-secondary text-white rounded-lg transition-all duration-300 hover:bg-opacity-90 hover:transform hover:scale-105">Add
                 Another Customer</a>
             <a href="dashboard.jsp"

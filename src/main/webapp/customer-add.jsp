@@ -190,8 +190,8 @@
                             </svg>
                         </span>
                         <input type="tel" name="contact_no" required
-                               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                               placeholder="077-123-4567"
+                               pattern="[0]{1}[7]{1}[0-9]{8}"
+                               placeholder="07XXXXXXXX"
                                value="<%= isEdit ? customer.getContact_no() : "" %>"
                                class="pl-11 pr-3 py-2 w-full rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#ff6d4d]/25 focus:border-[#ff6d4d] transition"/>
                     </div>
