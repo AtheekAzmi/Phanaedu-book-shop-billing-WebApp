@@ -1,5 +1,6 @@
 package dao;
 
+import model.User;
 import util.DBConnection;
 
 import java.sql.*;
@@ -27,6 +28,22 @@ public class UserDAO {
             e.printStackTrace();
         }
         return isValid;
+    }
+
+    public static boolean registerUser(User user) {
+        String sql = "INSERT INTO users (username, password, full_Name) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getFullName());
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.err.println("Error registering user: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

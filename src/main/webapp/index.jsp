@@ -100,7 +100,7 @@
                             <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
                         </svg>
                     </a>
-                    <a class="nav-link" href="#" title="Register">
+                    <a class="nav-link" href="register" title="Register">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                             <path d="M14 8a.5.5 0 0 1 .5.5v1.5H16a.5.5 0 0 1 0 1h-1.5V13a.5.5 0 0 1-1 0v-2H12a.5.5 0 0 1 0-1h1.5V8.5A.5.5 0 0 1 14 8zm-6 5c-3.314 0-6 1.343-6 3v1h12v-1c0-1.657-2.686-3-6-3z"/>
