@@ -10,6 +10,7 @@
 <%@ page import="dao.CustomerDAO" %>
 <%@ page import="model.Customer" %>
 <%@ page import="java.util.List" %>
+<%@ page import="dao.ItemDAO" %>
 <%
     String username = (String) session.getAttribute("user");
     if (username == null) {
@@ -279,6 +280,12 @@
         <div class="card border-danger h-100">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Inventory Items</h6>
+                <%
+                    ItemDAO itemDAO = new ItemDAO();
+                    int totalStock = itemDAO.getTotalStockQuantity();
+                %>
+                <h3><%= totalStock %></h3>
+                <span class="text-danger">Total stock quantity</span>
                 <div class="mt-2 text-danger small">-3.2% from last week</div>
                 <span class="position-absolute top-0 end-0 m-3"><i class="bi bi-box-seam fs-4"></i></span>
             </div>
@@ -328,7 +335,7 @@
             </a>
         </div>
         <div class="col-md-4">
-            <a href="#itemsMenu" class="text-decoration-none">
+            <a href="item-list.jsp" class="text-decoration-none">
                 <div class="card h-100">
                     <div class="card-body d-flex align-items-center">
                         <i class="bi bi-box-seam fs-2 text-info me-3"></i>

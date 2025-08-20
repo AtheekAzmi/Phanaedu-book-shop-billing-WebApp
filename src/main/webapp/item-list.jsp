@@ -87,6 +87,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                         </thead>
@@ -118,6 +119,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <img src="ItemImageServlet?item_id=<%= item.getItem_id() %>" alt="Item Photo" class="w-16 h-16 object-cover rounded-lg border border-gray-200 shadow cursor-pointer" onclick="showImageModal('ItemImageServlet?item_id=<%= item.getItem_id() %>')" />
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">$<%= item.getPrice() * item.getStock_quantity() %></td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center justify-end gap-3">
                                 <a href="viewItem?item_id=<%= item.getItem_id() %>" class="text-secondary hover:underline">View</a>
                                 <a href="editItem?item_id=<%= item.getItem_id() %>" class="text-primary hover:underline">Edit</a>

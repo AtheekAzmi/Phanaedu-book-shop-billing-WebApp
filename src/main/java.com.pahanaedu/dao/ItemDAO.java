@@ -122,4 +122,18 @@ public class ItemDAO {
         }
         return itemList;
     }
+
+    public int getTotalStockQuantity() {
+        String sql = "SELECT SUM(stock_quantity) FROM items";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
