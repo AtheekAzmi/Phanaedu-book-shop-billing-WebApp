@@ -123,9 +123,8 @@
             </a>
             <div class="collapse" id="itemsMenu">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
-                    <li><a href="#" class="nav-link text-white"><i class="bi bi-plus-square"></i> Add Item</a></li>
-                    <li><a href="#" class="nav-link text-white"><i class="bi bi-pencil"></i> Edit Item</a></li>
-                    <li><a href="#" class="nav-link text-white"><i class="bi bi-trash"></i> Delete Item</a></li>
+                    <li><a href="addItem" class="nav-link text-white"><i class="bi bi-plus-square"></i> Add Item</a></li>
+                    <li><a href="item-list.jsp" class="nav-link text-white"><i class="bi bi-pencil"></i> Manage Items</a></li>
                 </ul>
             </div>
         </li>
@@ -189,9 +188,8 @@
                 </a>
                 <div class="collapse" id="itemsMenuMobile">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
-                        <li><a href="#" class="nav-link text-white"><i class="bi bi-plus-square"></i> Add Item</a></li>
-                        <li><a href="#" class="nav-link text-white"><i class="bi bi-pencil"></i> Edit Item</a></li>
-                        <li><a href="#" class="nav-link text-white"><i class="bi bi-trash"></i> Delete Item</a></li>
+                        <<li><a href="addItem" class="nav-link text-white"><i class="bi bi-plus-square"></i> Add Item</a></li>
+                        <li><a href="item-list.jsp" class="nav-link text-white"><i class="bi bi-pencil"></i> Manage Items</a></li>
                     </ul>
                 </div>
             </li>
