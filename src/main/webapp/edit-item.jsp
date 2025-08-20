@@ -94,7 +94,7 @@
                 <span class="floating-label">Change Photo</span>
                 <span class="text-xs text-gray-400 block mt-1">Leave blank to keep current photo.</span>
             </div>
-            <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-tr from-brand.gradientFrom to-brand.gradientTo text-white font-bold shadow hover:scale-[1.03] transition">Update Item</button>
+            <button type="submit" class="w-full py-3 rounded-lg bg-primary text-white font-bold shadow hover:scale-[1.03] transition">Update Item</button>
         </form>
         <% if (request.getAttribute("message") != null) { %>
         <div class="mt-6 px-4 py-3 rounded-lg bg-green-50 border border-green-100 text-green-700 flex items-center gap-2 animate-fade-in">
@@ -112,7 +112,7 @@
             <a href="item-list.jsp" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-white font-medium shadow hover:bg-secondary/90 transition">
                 <i class="fa-solid fa-list"></i> Item List
             </a>
-            <a href="dashboard.jsp" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand.accent text-white font-medium shadow hover:bg-brand.accent/90 transition">
+            <a href="dashboard.jsp" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-white font-medium shadow hover:bg-brand.accent/90 transition">
                 <i class="fa-solid fa-gauge"></i> Dashboard
             </a>
         </div>

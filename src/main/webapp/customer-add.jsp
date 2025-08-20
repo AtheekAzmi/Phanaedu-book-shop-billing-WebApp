@@ -27,6 +27,10 @@
             }
         }
 
+        .dahsboardbtn{
+            background-color: var(--secondary);
+        }
+
         .icon-float {
             animation: float 3s ease-in-out infinite;
         }
@@ -196,26 +200,6 @@
                                class="pl-11 pr-3 py-2 w-full rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#ff6d4d]/25 focus:border-[#ff6d4d] transition"/>
                     </div>
                 </div>
-
-                <!-- Units Consumed -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Units Consumed *</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                            <svg class="w-5 h-5 text-[#309afc] icon-float" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2v10l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
-                                      stroke-linejoin="round"/>
-                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.2"/>
-                            </svg>
-                        </span>
-                        <input type="number" min="0" name="unit_consumed" required
-                               placeholder="100"
-                               value="<%= isEdit ? customer.getUnit_consumed() : "" %>"
-                               class="pl-11 pr-3 py-2 w-full rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#309afc]/25 focus:border-[#309afc] transition"/>
-                    </div>
-                    <p class="text-xs text-gray-400 mt-1">Enter total units purchased/consumed</p>
-                </div>
             </div>
 
             <!-- Actions -->
@@ -229,6 +213,10 @@
                     </svg>
                     <span><%= isEdit ? "Update" : "Save" %></span>
                 </button>
+
+                <a href="dashboard.jsp" class="dahsboardbtn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white font-medium shadow hover:bg-brand.accent/90 transition">
+                    <i class="fa-solid fa-gauge"></i> Dashboard
+                </a>
 
                 <a href="listCustomers"
                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm text-gray-600 px-4 py-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition">

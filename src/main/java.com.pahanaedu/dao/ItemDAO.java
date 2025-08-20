@@ -122,4 +122,30 @@ public class ItemDAO {
         }
         return itemList;
     }
+
+    public int getTotalStockQuantity() {
+        String sql = "SELECT SUM(stock_quantity) FROM items";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void reduceStockAndIncrementSales(int itemId, int quantitySold) {
+        String sql = "UPDATE items SET stock_quantity = stock_quantity - ? WHERE item_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, quantitySold);
+            stmt.setInt(2, itemId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
