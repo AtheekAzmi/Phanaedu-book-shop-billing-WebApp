@@ -27,6 +27,7 @@ public class AddBillServlet extends HttpServlet {
         int customerId = Integer.parseInt(request.getParameter("customerId"));
         int userId = Integer.parseInt(request.getParameter("userId"));
         double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
+        String paymentMethod = request.getParameter("paymentMethod");
 
         // Collect bill items
         String[] itemIds = request.getParameterValues("itemId");
@@ -45,11 +46,24 @@ public class AddBillServlet extends HttpServlet {
             }
         }
 
-        Bill bill = new Bill(0, customerId, userId, null, totalAmount, billItems);
+        java.util.Date billDate = new java.util.Date();
+        Bill bill = new Bill(0, customerId, userId, billDate, totalAmount, billItems, paymentMethod);
 
         boolean success = billDAO.addBill(bill);
 
         if (success) {
+            // Update stock and sales for each item
+            dao.ItemDAO itemDAO = new dao.ItemDAO();
+            for (model.BillItem item : billItems) {
+                itemDAO.reduceStockAndIncrementSales(item.getItemId(), item.getQuantity());
+            }
+            // Update customer's total unit consumed
+            int totalUnits = 0;
+            for (model.BillItem item : billItems) {
+                totalUnits += item.getQuantity();
+            }
+            dao.CustomerDAO customerDAO = new dao.CustomerDAO();
+            customerDAO.incrementUnitConsumed(customerId, totalUnits);
             request.setAttribute("bill", bill);
             request.getRequestDispatcher("billSuccess.jsp").forward(request, response);
         } else {

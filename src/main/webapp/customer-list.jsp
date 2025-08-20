@@ -53,6 +53,14 @@
     </div>
   </div>
 
+  <!-- Error Message -->
+  <% if (request.getAttribute("errorMessage") != null) { %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <strong class="font-bold">Error:</strong>
+      <span class="block sm:inline"><%= request.getAttribute("errorMessage") %></span>
+    </div>
+  <% } %>
+
   <!-- Customer List Table -->
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

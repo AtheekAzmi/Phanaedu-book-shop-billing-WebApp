@@ -10,19 +10,28 @@ import java.util.List;
 public class CustomerDAO {
 
     // Insert new customer
-    public void addCustomer(Customer customer) {
+    public int addCustomer(Customer customer) {
         String sql = "INSERT INTO customer (account_number, full_name, address, contact_no, unit_consumed) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, customer.getAccount_number());
             ps.setString(2, customer.getFull_name());
             ps.setString(3, customer.getAddress());
             ps.setString(4, customer.getContact_no());
             ps.setInt(5, customer.getUnit_consumed());
-            ps.executeUpdate();
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    customer.setCustomer_id(id);
+                    return id;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     // Get all customers
@@ -92,10 +101,23 @@ public class CustomerDAO {
 
     // Delete customer
     public void deleteCustomer(int id) {
-        String sql = "DELETE FROM customer WHERE customer_id=?";
+        String sql = "DELETE FROM customer WHERE customer.customer_Id=?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Increment unit_consumed for a customer
+    public void incrementUnitConsumed(int customerId, int units) {
+        String sql = "UPDATE customer SET unit_consumed = unit_consumed + ? WHERE customer_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, units);
+            ps.setInt(2, customerId);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

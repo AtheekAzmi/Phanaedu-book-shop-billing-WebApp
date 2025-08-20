@@ -10,16 +10,27 @@ public class Bill {
     private Date billDate;
     private double totalAmount;
     private List<BillItem> items;
+    private String paymentMethod;
 
     public Bill() {}
     public Bill(int billId, int customerId, int userId, Date billDate,
-                double totalAmount, List<BillItem> items) {
+                double totalAmount, List<BillItem> items, String paymentMethod) {
         this.billId = billId;
         this.customerId = customerId;
         this.userId = userId;
         this.billDate = billDate;
         this.totalAmount = totalAmount;
         this.items = items;
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Bill(int billId, int customerId, int userId, double totalAmount, List<BillItem> items, String paymentMethod) {
+        this.billId = billId;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.totalAmount = totalAmount;
+        this.items = items;
+        this.paymentMethod = paymentMethod;
     }
 
     public int getBillId() { return billId; }
@@ -39,4 +50,7 @@ public class Bill {
 
     public List<BillItem> getItems() { return items; }
     public void setItems(List<BillItem> items) { this.items = items; }
+
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
 }

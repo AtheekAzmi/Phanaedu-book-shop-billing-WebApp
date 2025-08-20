@@ -11,6 +11,13 @@
 <%@ page import="model.Customer" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dao.ItemDAO" %>
+<%@ page import="dao.BillDAO" %>
+<%@ page import="model.Items" %>
+<%@ page import="model.Bill" %>
+<%@ page import="model.BillItem" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%
     String username = (String) session.getAttribute("user");
     if (username == null) {
@@ -136,9 +143,15 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-white d-flex align-items-center">
+            <a href="billForm.jsp" class="nav-link text-white d-flex align-items-center">
                 <i class="bi bi-printer"></i>
                 <span class="ms-2">Calculate & Print Bills</span>
+            </a>
+        </li>
+        <li>
+            <a href="bill-history.jsp" class="nav-link text-white d-flex align-items-center">
+                <i class="bi bi-clock-history"></i>
+                <span class="ms-2">Bill History</span>
             </a>
         </li>
         <li>
@@ -148,7 +161,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="exit2 nav-link text-danger d-flex align-items-center">
+            <a href="index.jsp" class="exit2 nav-link text-danger d-flex align-items-center">
                 <i class="bi bi-box-arrow-right"></i>
                 <span class="ms-2">Exit System</span>
             </a>
@@ -189,7 +202,7 @@
                 </a>
                 <div class="collapse" id="itemsMenuMobile">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-4">
-                        <<li><a href="addItem" class="nav-link text-white"><i class="bi bi-plus-square"></i> Add Item</a></li>
+                        <li><a href="addItem" class="nav-link text-white"><i class="bi bi-plus-square"></i> Add Item</a></li>
                         <li><a href="item-list.jsp" class="nav-link text-white"><i class="bi bi-pencil"></i> Manage Items</a></li>
                     </ul>
                 </div>
@@ -201,9 +214,15 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white d-flex align-items-center">
+                <a href="billForm.jsp" class="nav-link text-white d-flex align-items-center">
                     <i class="bi bi-printer"></i>
                     <span class="ms-2">Calculate & Print Bills</span>
+                </a>
+            </li>
+            <li>
+                <a href="bill-history.jsp" class="exit2 nav-link text-white d-flex align-items-center">
+                    <i class="bi bi-clock-history"></i>
+                    <span class="ms-2">Bill History</span>
                 </a>
             </li>
             <li>
@@ -213,7 +232,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="exit1 nav-link d-flex align-items-center">
+                <a href="index.jsp" class="exit1 nav-link d-flex align-items-center">
                     <i class="bi bi-box-arrow-right"></i>
                     <span class="ms-2">Exit System</span>
                 </a>
@@ -271,7 +290,7 @@
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Today's Sales</h6>
                 <div class="mt-2 text-success small">+8.3% from yesterday</div>
-                <span class="position-absolute top-0 end-0 m-3"><i class="bi bi-currency-rupee fs-4"></i></span>
+                <span class="position-absolute top-0 end-0 m-3"><strong>LKR</strong></span>
             </div>
         </div>
     </div>
@@ -351,35 +370,137 @@
 </div>
 
 <!-- Recent Activity -->
-<div class="mt-4 mx-xl-2">
-    <h6 class="fw-bold">Recent Activity</h6>
-    <div class="card">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-person-plus text-primary me-2"></i>
-                <div>
-                    <div class="fw-bold">New customer registered</div>
-                    <div class="text-muted small">John Doe was added to the system</div>
-                </div>
-                <span class="ms-auto text-muted small">10 min ago</span>
-            </li>
-            <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-currency-dollar text-success me-2"></i>
-                <div>
-                    <div class="fw-bold">Order completed</div>
-                    <div class="text-muted small">Invoice #INV-2023-1245 for $2,450</div>
-                </div>
-                <span class="ms-auto text-muted small">1 hour ago</span>
-            </li>
-            <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-exclamation-triangle text-warning me-2"></i>
-                <div>
-                    <div class="fw-bold">Low stock alert</div>
-                    <div class="text-muted small">"Advanced Mathematics" is running low (3 remaining)</div>
-                </div>
-                <span class="ms-auto text-muted small">3 hours ago</span>
-            </li>
-        </ul>
+<%--<div class="mt-4 mx-xl-2">--%>
+<%--    <h6 class="fw-bold">Recent Activity</h6>--%>
+<%--    <div class="card">--%>
+<%--        <ul class="list-group list-group-flush">--%>
+<%--            <li class="list-group-item d-flex align-items-center">--%>
+<%--                <i class="bi bi-person-plus text-primary me-2"></i>--%>
+<%--                <div>--%>
+<%--                    <div class="fw-bold">New customer registered</div>--%>
+<%--                    <div class="text-muted small">John Doe was added to the system</div>--%>
+<%--                </div>--%>
+<%--                <span class="ms-auto text-muted small">10 min ago</span>--%>
+<%--            </li>--%>
+<%--            <li class="list-group-item d-flex align-items-center">--%>
+<%--                <i class="bi bi-currency-dollar text-success me-2"></i>--%>
+<%--                <div>--%>
+<%--                    <div class="fw-bold">Order completed</div>--%>
+<%--                    <div class="text-muted small">Invoice #INV-2023-1245 for $2,450</div>--%>
+<%--                </div>--%>
+<%--                <span class="ms-auto text-muted small">1 hour ago</span>--%>
+<%--            </li>--%>
+<%--            <li class="list-group-item d-flex align-items-center">--%>
+<%--                <i class="bi bi-exclamation-triangle text-warning me-2"></i>--%>
+<%--                <div>--%>
+<%--                    <div class="fw-bold">Low stock alert</div>--%>
+<%--                    <div class="text-muted small">"Advanced Mathematics" is running low (3 remaining)</div>--%>
+<%--                </div>--%>
+<%--                <span class="ms-auto text-muted small">3 hours ago</span>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
+<%--    </div>--%>
+<%--</div>--%>
+
+<%
+    // Remove duplicate itemDAO declaration
+    // ItemDAO itemDAO = new ItemDAO(); // Already declared earlier
+    List<Items> items = itemDAO.getAllItems();
+    double inventoryValue = 0.0;
+    int lowStockThreshold = 10;
+    List<Items> lowStockItems = new ArrayList<>();
+    for (Items item : items) {
+        inventoryValue += item.getPrice() * item.getStock_quantity();
+        if (item.getStock_quantity() < lowStockThreshold) {
+            lowStockItems.add(item);
+        }
+    }
+    BillDAO billDAO = new BillDAO();
+    List<Bill> allBills = billDAO.getAllBills();
+    double totalSales = 0.0;
+    int salesCount = allBills != null ? allBills.size() : 0;
+    Map<Integer, Integer> itemSalesMap = new HashMap<>(); // itemId -> total quantity sold
+    if (allBills != null) {
+        for (Bill bill : allBills) {
+            totalSales += bill.getTotalAmount();
+            for (BillItem billItem : bill.getItems()) {
+                int itemId = billItem.getItemId();
+                int qty = billItem.getQuantity();
+                itemSalesMap.put(itemId, itemSalesMap.getOrDefault(itemId, 0) + qty);
+            }
+        }
+    }
+    // Find highest moving item(s)
+    int maxQty = 0;
+    List<Items> highestMovingItems = new ArrayList<>();
+    for (Map.Entry<Integer, Integer> entry : itemSalesMap.entrySet()) {
+        if (entry.getValue() > maxQty) {
+            maxQty = entry.getValue();
+            highestMovingItems.clear();
+            highestMovingItems.add(itemDAO.getItemById(entry.getKey()));
+        } else if (entry.getValue() == maxQty) {
+            highestMovingItems.add(itemDAO.getItemById(entry.getKey()));
+        }
+    }
+    java.text.NumberFormat nf = java.text.NumberFormat.getNumberInstance(java.util.Locale.forLanguageTag("en-LK"));
+    nf.setMinimumFractionDigits(2);
+    nf.setMaximumFractionDigits(2);
+%>
+<div class="row g-3 mx-xl-2">
+    <!-- Total Inventory Value -->
+    <div class="col-md-3">
+        <div class="card border-info h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Total Inventory Value</h6>
+                <h3>LKR <%= nf.format(inventoryValue) %></h3>
+                <span class="text-info">Sum of all item values</span>
+            </div>
+        </div>
+    </div>
+    <!-- Low Stock Alerts -->
+    <div class="col-md-3">
+        <div class="card border-warning h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Low Stock Alerts</h6>
+                <h3><%= lowStockItems.size() %> item(s)</h3>
+                <% if (!lowStockItems.isEmpty()) { %>
+                    <ul style="font-size:small;">
+                    <% for (Items item : lowStockItems) { %>
+                        <li><%= item.getItem_name() %> (<%= item.getStock_quantity() %> left)</li>
+                    <% } %>
+                    </ul>
+                <% } else { %>
+                    <span class="text-success">No low stock items</span>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <!-- Total Sales -->
+    <div class="col-md-3">
+        <div class="card border-success h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Total Sales</h6>
+                <h3>LKR <%= nf.format(totalSales) %></h3>
+                <span class="text-success">Number of Sales: <%= salesCount %></span>
+            </div>
+        </div>
+    </div>
+    <!-- Highest Moving Item -->
+    <div class="col-md-3">
+        <div class="card border-primary h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Highest Moving Item(s)</h6>
+                <% if (!highestMovingItems.isEmpty()) { %>
+                    <ul style="font-size:small;">
+                    <% for (Items item : highestMovingItems) { %>
+                        <li><%= item.getItem_name() %> (<%= itemSalesMap.get(item.getItem_id()) %> sold)</li>
+                    <% } %>
+                    </ul>
+                <% } else { %>
+                    <span class="text-muted">No sales data</span>
+                <% } %>
+            </div>
+        </div>
     </div>
 </div>
 </div>

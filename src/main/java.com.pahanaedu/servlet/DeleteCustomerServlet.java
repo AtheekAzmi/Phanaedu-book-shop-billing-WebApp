@@ -14,8 +14,17 @@ public class DeleteCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        customerDAO.deleteCustomer(id);
-        response.sendRedirect("listCustomers");
+        try {
+            customerDAO.deleteCustomer(id);
+            response.sendRedirect("listCustomers?deleteSuccess=true");
+        } catch (Exception e) {
+            Throwable cause = e.getCause();
+            if (cause instanceof java.sql.SQLIntegrityConstraintViolationException) {
+                request.setAttribute("errorMessage", "Cannot delete customer: they have bills in the system.");
+            } else {
+                request.setAttribute("errorMessage", "An error occurred while deleting the customer.");
+            }
+            request.getRequestDispatcher("customer-list.jsp").forward(request, response);
+        }
     }
 }
-
