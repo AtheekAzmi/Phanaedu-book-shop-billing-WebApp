@@ -149,12 +149,24 @@
             }
             updateTotal();
         }
+
+        // Hook to prevent selecting disabled (safety for some browsers) and enforce stock when changing existing rows
+        function enforceStock(select){
+          const opt = select.selectedOptions[0];
+          if(!opt) return;
+          const stock = parseInt(opt.getAttribute('data-stock')||'0');
+          if(stock===0){ toast('Item out of stock','error'); select.value=''; }
+        }
+        // Update existing rows after page load (if any pre-rendered)
+        window.addEventListener('DOMContentLoaded',()=>{
+          document.querySelectorAll('select[name=itemId]').forEach(s=>{s.addEventListener('change',()=>enforceStock(s)); enforceStock(s);});
+        });
     </script>
 </head>
 <body>
-    <div style="text-align:center; margin-bottom:20px;">
-        <button type="button" onclick="window.location.href='dashboard.jsp'">Back to Dashboard</button>
-    </div>
+<div style="text-align:center; margin-bottom:20px;">
+    <button type="button" onclick="window.location.href='dashboard.jsp'">Back to Dashboard</button>
+</div>
 <h2 align="center">Create New Bill</h2>
 <form action="addBill" method="post">
     <table>
@@ -219,13 +231,15 @@
 
 <!-- Hidden item dropdown template -->
 <div id="itemTemplate" style="display:none;">
-    <select name="itemId">
+    <select name="itemId" class="border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
         <%
             ItemDAO itemDAO = new ItemDAO();
             List<Items> items = itemDAO.getAllItems();
             for(Items i : items){
+                int stk = i.getStock_quantity();
+                String label = i.getItem_name() + (stk==0 ? " (Out of Stock)" : "");
         %>
-        <option value="<%= i.getItem_id() %>"><%= i.getItem_name() %></option>
+        <option value="<%= i.getItem_id() %>" data-stock="<%= stk %>" <%= stk==0?"disabled class='text-gray-400'": "" %>><%= label %></option>
         <% } %>
     </select>
 </div>
@@ -253,5 +267,9 @@
     <button type="button" onclick="window.location.href='dashboard.jsp'">Back to Dashboard</button>
     <button type="button" onclick="resetForm()">Reset</button>
 </div>
+
+<% if (request.getAttribute("billError") != null) { %>
+<script>window.addEventListener('DOMContentLoaded',function(){toast('<%= request.getAttribute("billError") %>','error');});</script>
+<% } %>
 </body>
 </html>

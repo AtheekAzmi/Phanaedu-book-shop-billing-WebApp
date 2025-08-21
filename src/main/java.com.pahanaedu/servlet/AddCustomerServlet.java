@@ -19,6 +19,7 @@ public class AddCustomerServlet extends HttpServlet {
         String name = request.getParameter("name");
         String address = request.getParameter("address");
         String contact = request.getParameter("contact");
+
         int unit = 0;
         try {
             unit = Integer.parseInt(request.getParameter("unit"));

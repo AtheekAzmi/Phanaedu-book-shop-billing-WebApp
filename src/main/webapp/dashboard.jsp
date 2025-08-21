@@ -52,6 +52,9 @@
         border-radius: 5px;
         margin: 0;
     }
+    .adminreg{
+        text-decoration: none;
+    }
     .exit1{
         background-color: #1b1919;
         color: rgb(250, 0, 0);
@@ -94,10 +97,10 @@
                     <i class="bi bi-bell fs-5"></i>
                     <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                 </span>
-            <span class="d-flex align-items-center">
+            <a class="adminreg" href="register.jsp"><span class="d-flex align-items-center">
                     <span class="rounded-circle bg-info text-white fw-bold d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">AU</span>
                     <span class="ms-2 text-white fw-semibold">Admin User</span>
-                </span>
+                </span></a>
         </div>
     </div>
 </nav>
@@ -155,7 +158,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-white d-flex align-items-center">
+            <a href="help.jsp" class="nav-link text-white d-flex align-items-center">
                 <i class="bi bi-question-circle"></i>
                 <span class="ms-2">Help</span>
             </a>
@@ -226,7 +229,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="exit2 nav-link text-white d-flex align-items-center">
+                <a href="help.jsp" class="exit2 nav-link text-white d-flex align-items-center">
                     <i class="bi bi-question-circle"></i>
                     <span class="ms-2">Help</span>
                 </a>
@@ -341,7 +344,7 @@
             </a>
         </div>
         <div class="col-md-4">
-            <a href="#" class="text-decoration-none">
+            <a href="billForm.jsp" class="text-decoration-none">
                 <div class="card h-100">
                     <div class="card-body d-flex align-items-center">
                         <i class="bi bi-calculator fs-2 text-success me-3"></i>
@@ -446,7 +449,7 @@
     nf.setMinimumFractionDigits(2);
     nf.setMaximumFractionDigits(2);
 %>
-<div class="row g-3 mx-xl-2">
+<div class="row g-3 mx-xl-2 my-5">
     <!-- Total Inventory Value -->
     <div class="col-md-3">
         <div class="card border-info h-100">

@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BillDAO {
 
@@ -144,5 +146,30 @@ public class BillDAO {
             e.printStackTrace();
         }
         return items;
+    }
+
+    public double getTotalBilledForCustomer(int customerId) {
+        String sql = "SELECT COALESCE(SUM(total_amount),0) FROM bills WHERE customer_id=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return 0.0;
+    }
+
+    public Map<Integer, Double> getTotalsForAllCustomers() {
+        Map<Integer, Double> map = new HashMap<>();
+        String sql = "SELECT customer_id, SUM(total_amount) total FROM bills GROUP BY customer_id";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                map.put(rs.getInt("customer_id"), rs.getDouble("total"));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return map;
     }
 }

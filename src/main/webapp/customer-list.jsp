@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.List, model.Customer" %>
+<%@ page import="java.util.List, java.util.Map, model.Customer" %>
 <!doctype html>
 <html class="bg-gray-100">
 <head>
@@ -25,7 +25,10 @@
 <body class="bg-gray-100">
 <%
   List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+  Map<Integer, Double> billTotals = (Map<Integer, Double>) request.getAttribute("billTotals");
   int total = (customers == null) ? 0 : customers.size();
+  java.text.NumberFormat cf = java.text.NumberFormat.getNumberInstance(new java.util.Locale("en","LK"));
+  cf.setMinimumFractionDigits(2); cf.setMaximumFractionDigits(2);
 %>
 
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -69,32 +72,14 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
             <tr>
-
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  data-increment="${counter}">
-                No.
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              ID
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Account
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Address
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Contact
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Units
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Billed (LKR)</th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -102,31 +87,21 @@
               if (customers != null) {
                 int counter = 1;
                 for (Customer c : customers) {
+                  double totalBilled = 0.0;
+                  if (billTotals != null && billTotals.containsKey(c.getCustomer_id())) totalBilled = billTotals.get(c.getCustomer_id());
             %>
             <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= counter++ %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= c.getCustomer_id() %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= c.getAccount_number() %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= c.getFull_name() %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= c.getAddress() %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= c.getContact_no() %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        <%= c.getUnit_consumed() %> units
-                                    </span>
-              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= counter++ %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= c.getCustomer_id() %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= c.getAccount_number() %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= c.getFull_name() %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= c.getAddress() %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= c.getContact_no() %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-primary">LKR <%= cf.format(totalBilled) %></td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <a href="viewCustomer?id=<%= c.getCustomer_id() %>" class="text-secondary hover:text-secondary/80 mr-4">View</a>
-                <a href="editCustomer?id=<%= c.getCustomer_id() %>"
-                   class="text-primary hover:text-primary/80 mr-4">Edit</a>
-                <a href="deleteCustomer?id=<%= c.getCustomer_id() %>" onclick="return confirm('Delete this customer?')"
-                   class="text-red-600 hover:text-red-900">Delete</a>
+                <a href="editCustomer?id=<%= c.getCustomer_id() %>" class="text-primary hover:text-primary/80 mr-4">Edit</a>
+                <a href="deleteCustomer?id=<%= c.getCustomer_id() %>" onclick="return confirm('Delete this customer?')" class="text-red-600 hover:text-red-900">Delete</a>
               </td>
             </tr>
             <% }
