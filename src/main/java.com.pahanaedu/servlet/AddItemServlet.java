@@ -25,8 +25,23 @@ public class AddItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("item_name");
         String description = request.getParameter("description");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int stock = Integer.parseInt(request.getParameter("stock_quantity"));
+        String priceStr = request.getParameter("price");
+        String stockStr = request.getParameter("stock_quantity");
+
+        double price;
+        int stock;
+        try { price = Double.parseDouble(priceStr); } catch (Exception e){ price = -1; }
+        try { stock = Integer.parseInt(stockStr); } catch (Exception e){ stock = -1; }
+
+        if (price < 0 || stock < 0) {
+            request.setAttribute("error", "Price and Stock must be non-negative.");
+            request.setAttribute("item_name", name);
+            request.setAttribute("description", description);
+            request.setAttribute("price", priceStr);
+            request.setAttribute("stock_quantity", stockStr);
+            request.getRequestDispatcher("add-item.jsp").forward(request, response);
+            return;
+        }
 
         Part photoPart = request.getPart("photo");
         byte[] itemImage = null;
@@ -46,10 +61,13 @@ public class AddItemServlet extends HttpServlet {
 
         boolean success = new ItemDAO().addItem(item);
         if (success) {
-            request.setAttribute("message", "Item added successfully!");
             response.sendRedirect("item-list.jsp");
         } else {
             request.setAttribute("error", "Failed to add item.");
+            request.setAttribute("item_name", name);
+            request.setAttribute("description", description);
+            request.setAttribute("price", priceStr);
+            request.setAttribute("stock_quantity", stockStr);
             request.getRequestDispatcher("add-item.jsp").forward(request, response);
         }
     }

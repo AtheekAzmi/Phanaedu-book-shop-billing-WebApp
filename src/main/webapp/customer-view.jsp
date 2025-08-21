@@ -9,6 +9,8 @@
 <%@ page import="model.Customer" %>
 <%
   Customer customer = (Customer) request.getAttribute("customer");
+  Double totalBilled = (Double) request.getAttribute("totalBilled");
+  if(totalBilled == null) totalBilled = 0.0;
 %>
 <!doctype html>
 <html>
@@ -121,16 +123,6 @@
       </div>
 
       <div class="p-4 rounded-lg bg-gray-50/50">
-        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Units Consumed</div>
-        <div class="flex items-center gap-4">
-          <div class="text-xl font-bold text-secondary"><%= customer.getUnit_consumed() %>
-          </div>
-          <div class="flex-1">
-            <div class="h-4 rounded-full bg-gray-100 overflow-hidden shadow-inner">
-              <div class="h-4 bg-gradient-to-r from-secondary to-accent shadow-lg transition-all"
-                   style="width: calc(<%= customer.getUnit_consumed() %> * 0.8% )"></div>
-            </div>
-          </div>
         </div>
       </div>
 

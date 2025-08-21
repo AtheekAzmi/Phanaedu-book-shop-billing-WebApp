@@ -42,6 +42,9 @@
         .field-wrap {
             position: relative;
         }
+        .save-chang{
+            background-color: #3e79fb;
+        }
         .floating-label {
             position: absolute;
             left: 14px;
@@ -204,7 +207,7 @@
                         </button>
 
                         <button type="submit"
-                                class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-brand.gradientFrom to-brand.gradientTo text-white text-sm font-medium rounded-xl shadow hover:scale-[.995] focus:outline-none focus:ring-2 focus:ring-brand.accent transition">
+                                class="save-chang inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-brand.gradientFrom to-brand.gradientTo text-white text-sm font-medium rounded-xl shadow hover:scale-[.995] focus:outline-none focus:ring-2 focus:ring-brand.accent transition">
                             <i class="fas fa-save"></i>
                             Save Changes
                         </button>

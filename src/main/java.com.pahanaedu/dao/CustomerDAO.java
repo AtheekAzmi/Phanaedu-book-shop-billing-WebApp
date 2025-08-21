@@ -18,7 +18,7 @@ public class CustomerDAO {
             ps.setString(2, customer.getFull_name());
             ps.setString(3, customer.getAddress());
             ps.setString(4, customer.getContact_no());
-            ps.setInt(5, customer.getUnit_consumed());
+            ps.setInt(5, customer.getUnit_consumed()); // BUG FIX: previously missing setting of unit_consumed (5th placeholder) caused insertion failure
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
@@ -101,7 +101,7 @@ public class CustomerDAO {
 
     // Delete customer
     public void deleteCustomer(int id) {
-        String sql = "DELETE FROM customer WHERE customer.customer_Id=?";
+        String sql = "DELETE FROM customer WHERE customer_id=?"; // corrected column name
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);

@@ -21,18 +21,23 @@ public class UpdateCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            int customerId = Integer.parseInt(request.getParameter("customer_id"));
+            String accountNumber = request.getParameter("account_number");
+            String fullName = request.getParameter("full_name");
+            String address = request.getParameter("address");
+            String contactNo = request.getParameter("contact_no");
 
-        int customerId = Integer.parseInt(request.getParameter("customer_id"));
-        String accountNumber = request.getParameter("account_number");
-        String fullName = request.getParameter("full_name");
-        String address = request.getParameter("address");
-        String contactNo = request.getParameter("contact_no");
-        int unitsConsumed = Integer.parseInt(request.getParameter("unit_consumed"));
+            Customer existing = customerDAO.getCustomerById(customerId);
+            int preservedUnits = existing != null ? existing.getUnit_consumed() : 0;
 
-        Customer customer = new Customer(customerId, accountNumber, fullName, address, contactNo, unitsConsumed);
-
-        customerDAO.updateCustomer(customer);  // DAO is void, no boolean return
-
-        response.sendRedirect("customerUpdateSuccess.jsp");
+            Customer customer = new Customer(customerId, accountNumber, fullName, address, contactNo, preservedUnits);
+            customerDAO.updateCustomer(customer);
+            response.sendRedirect("customerUpdateSuccess.jsp");
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Update failed: " + e.getMessage());
+            request.getRequestDispatcher("customer-edit.jsp").forward(request, response);
+        }
     }
 }

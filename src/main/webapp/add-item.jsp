@@ -60,21 +60,21 @@
             <i class="fa-solid fa-plus fa-lg"></i>
             <h2 class="text-2xl font-bold text-brand">Add New Item</h2>
         </div>
-        <form method="post" action="addItem" enctype="multipart/form-data" class="space-y-6">
+        <form id="addItemForm" method="post" action="addItem" enctype="multipart/form-data" class="space-y-6" novalidate>
             <div class="field-wrap">
-                <input type="text" id="item_name" name="item_name" required placeholder=" " class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
+                <input type="text" id="item_name" name="item_name" required placeholder=" " value="<%= request.getAttribute("item_name")!=null?request.getAttribute("item_name"):"" %>" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
                 <span class="floating-label">Item Name</span>
             </div>
             <div class="field-wrap">
-                <input type="text" id="description" name="description" required placeholder=" " class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
+                <input type="text" id="description" name="description" required placeholder=" " value="<%= request.getAttribute("description")!=null?request.getAttribute("description"):"" %>" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
                 <span class="floating-label">Description</span>
             </div>
             <div class="field-wrap">
-                <input type="number" step="0.01" id="price" name="price" required placeholder=" " class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
+                <input type="number" step="0.01" min="0" id="price" name="price" required placeholder=" " value="<%= request.getAttribute("price")!=null?request.getAttribute("price"):"" %>" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
                 <span class="floating-label">Price</span>
             </div>
             <div class="field-wrap">
-                <input type="number" id="stock_quantity" name="stock_quantity" required placeholder=" " class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
+                <input type="number" min="0" id="stock_quantity" name="stock_quantity" required placeholder=" " value="<%= request.getAttribute("stock_quantity")!=null?request.getAttribute("stock_quantity"):"" %>" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand.gradientFrom focus:ring-2 focus:ring-brand.gradientFrom bg-neutralSoft text-brand shadow-sm" />
                 <span class="floating-label">Stock Quantity</span>
             </div>
             <div class="field-wrap">
@@ -104,5 +104,17 @@
             </a>
         </div>
     </div>
+<script>
+    ['price','stock_quantity'].forEach(id=>{
+        const el=document.getElementById(id);
+        el.addEventListener('input',()=>{ if(el.value==='')return; if(parseFloat(el.value)<0){ el.value=0; }});
+    });
+    document.getElementById('addItemForm').addEventListener('submit',e=>{
+        const price=parseFloat(priceEl().value||0); const stock=parseInt(stockEl().value||0,10);
+        if(price<0||stock<0){ e.preventDefault(); alert('Price and Stock must be non-negative.'); }
+    });
+    function priceEl(){return document.getElementById('price');}
+    function stockEl(){return document.getElementById('stock_quantity');}
+</script>
 </body>
 </html>

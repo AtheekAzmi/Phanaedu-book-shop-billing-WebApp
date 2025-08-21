@@ -51,13 +51,18 @@
     </div>
     <!-- Status messages -->
     <div class="mb-6 grid grid-cols-1 gap-3">
-        <% if (request.getAttribute("message") != null) { %>
+        <%
+            String qpMessage = request.getParameter("message");
+            String qpError = request.getParameter("error");
+            Object attrMsg = request.getAttribute("message");
+            Object attrErr = request.getAttribute("error");
+            String showMsg = attrMsg != null ? attrMsg.toString() : qpMessage;
+            String showErr = attrErr != null ? attrErr.toString() : qpError;
+        %>
+        <% if (showMsg != null && !showMsg.isEmpty()) { %>
         <div class="px-4 py-3 rounded-lg bg-green-50 border border-green-100 text-green-700">
             <div class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-green-500 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 6L9 17l-5-5"/>
-                </svg>
-                <div><%= request.getAttribute("message") %></div>
+                <svg class="w-5 h-5 text-green-500 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
             </div>
         </div>
         <% } %>
