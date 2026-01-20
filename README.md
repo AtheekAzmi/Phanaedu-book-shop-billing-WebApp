@@ -1,6 +1,6 @@
 # PhanaEdu Book Shop Billing WebApp
 
-<img src="src/main/webapp/assets/logo.jpg" alt="PhanaEdu Logo">
+<img src="src/main/webapp/assets/logo.jpg" alt="PhanaEdu Logo" width="50%">
 
 A simple Java Servlet + JSP billing web application for a book shop.  
 This repository implements user registration/login, item management (with image upload), customers, and bills (invoices). The project is packaged as a WAR and intended to run on a servlet container (Tomcat, Jetty, etc.).
